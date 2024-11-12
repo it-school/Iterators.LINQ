@@ -18,7 +18,7 @@ namespace LINQ
             Console.WriteLine("\n------------------------------------------------------\n");
             Example6();
 
-            Console.WriteLine();
+            Console.WriteLine("\n");
         }
 
         public class DaysOfTheWeek : IEnumerable
