@@ -7,10 +7,15 @@ namespace LINQ
         static void Main(string[] args)
         {
             Example1();
+            Console.WriteLine("\n------------------------------------------------------\n");
             Example2();
+            Console.WriteLine("\n------------------------------------------------------\n");
             Example3();
+            Console.WriteLine("\n------------------------------------------------------\n");
             Example4();
+            Console.WriteLine("\n------------------------------------------------------\n");
             Example5();
+            Console.WriteLine("\n------------------------------------------------------\n");
             Example6();
 
             Console.WriteLine();
@@ -42,6 +47,8 @@ namespace LINQ
             {
                 Console.Write(day + " ");
             }
+
+            Console.WriteLine("\n");
         }
 
 
@@ -68,7 +75,6 @@ namespace LINQ
             var selectedNames2 = names.Where(name => name.Length == 5).OrderBy(name => name);
             foreach (string name in selectedNames2)
                 Console.WriteLine(name.ToUpper());
-
         }
 
 
@@ -78,27 +84,27 @@ namespace LINQ
         private static void Example3()
         {
             string[] input = { "Select", "Where", "OrderBy", "GroupBy", "Args" };
-            Console.WriteLine("\n\nИсходный набор слов:");
+            Console.WriteLine("\n\nOriginal words list:");
             foreach (var v in input)
             {
                 Console.Write(v + "\t");
             }
 
-            Console.WriteLine("\n\nупорядоченный по алфавиту:");
+            Console.WriteLine("\n\nsorted by aphabet:");
             var output = input.OrderBy(s => s);
             foreach (var v in output)
             {
                 Console.Write(v + " ");
             }
 
-            Console.WriteLine("\n\nпо длине:");
+            Console.WriteLine("\n\nsorted by length:");
             output = input.OrderBy(s => s.Length);
             foreach (var v in output)
             {
                 Console.Write(v + " ");
             }
 
-            Console.WriteLine("\n\nпо предпоследней букве слова:");
+            Console.WriteLine("\n\nsorted by prelast char of word:");
             output = input.OrderBy(s => s[^2]);
             foreach (var v in output)
             {
@@ -144,8 +150,6 @@ namespace LINQ
         /// </summary>
         public static void Example4()
         {
-            Console.WriteLine("\n");
-
             Book[] books = {    new Book ("Albahari", "LINQ: pocketbook", 2016),
                                 new Book ("Rattz", "LINQ: query language", 2008),
                                 new Book ("Kimmel", "LINQ Unleashed", 2020)
@@ -179,9 +183,6 @@ namespace LINQ
                 Console.Write(v + "\t");
             }
             Console.WriteLine("\n");
-
-
-            Console.WriteLine("\n");
         }
 
 
@@ -207,7 +208,6 @@ namespace LINQ
             {
                 Console.WriteLine($"{company.Name} : {company.Count}");
             }
-
         }
 
 
