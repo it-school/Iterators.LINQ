@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Concurrent;
 
 namespace LINQ
 {
@@ -20,6 +21,7 @@ namespace LINQ
 
             Console.WriteLine("\n");
         }
+
 
         public class DaysOfTheWeek : IEnumerable
         {
