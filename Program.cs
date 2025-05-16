@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Concurrent;
 
 namespace LINQ
 {
@@ -59,7 +58,7 @@ namespace LINQ
         /// </summary>
         private static void Example2()
         {
-            string[] names = { "Burns", "Connor", "Frank", "Everett", "Albert", "George", "Harris", "David" };
+            string[] names = ["Burns", "Connor", "Frank", "Everett", "Albert", "George", "Harris", "David"];
 
             // Old-school style
             var selectedNames = new List<string>();
@@ -68,6 +67,7 @@ namespace LINQ
                 if (name.Length == 5)
                     selectedNames.Add(name.ToUpper());
             }
+
             selectedNames.Sort();
 
             foreach (string name in selectedNames)
@@ -85,14 +85,14 @@ namespace LINQ
         /// </summary>
         private static void Example3()
         {
-            string[] input = { "Select", "Where", "OrderBy", "GroupBy", "Args" };
+            string[] input = ["Select", "Where", "OrderBy", "GroupBy", "Args"];
             Console.WriteLine("\n\nOriginal words list:");
             foreach (var v in input)
             {
                 Console.Write(v + "\t");
             }
 
-            Console.WriteLine("\n\nsorted by aphabet:");
+            Console.WriteLine("\n\nsorted by alphabet:");
             var output = input.OrderBy(s => s);
             foreach (var v in output)
             {
@@ -106,7 +106,7 @@ namespace LINQ
                 Console.Write(v + " ");
             }
 
-            Console.WriteLine("\n\nsorted by prelast char of word:");
+            Console.WriteLine("\n\nsorted by pre-last char of word:");
             output = input.OrderBy(s => s[^2]);
             foreach (var v in output)
             {
@@ -128,18 +128,11 @@ namespace LINQ
         }
 
 
-        public class Book
+        public class Book(string author, string title, int year)
         {
-            public Book(string author, string title, int year)
-            {
-                Author = author;
-                Title = title;
-                Year = year;
-            }
-
-            private string Author { get; set; }
-            private string Title { get; set; }
-            private int Year { get; set; }
+            private string Author { get; set; } = author;
+            private string Title { get; set; } = title;
+            private int Year { get; set; } = year;
 
             public override string? ToString()
             {
@@ -152,10 +145,12 @@ namespace LINQ
         /// </summary>
         public static void Example4()
         {
-            Book[] books = {    new Book ("Albahari", "LINQ: pocketbook", 2016),
-                                new Book ("Rattz", "LINQ: query language", 2008),
-                                new Book ("Kimmel", "LINQ Unleashed", 2020)
-                           };
+            Book[] books =
+            {
+                new("Albahari", "LINQ: pocketbook", 2016),
+                new("Rattz", "LINQ: query language", 2008),
+                new("Kimmel", "LINQ Unleashed", 2020)
+            };
             ArrayList bookList = new ArrayList(books);
 
             var result1 = bookList.OfType<Book>().Take(2);
@@ -163,6 +158,7 @@ namespace LINQ
             {
                 Console.Write(v + "\t");
             }
+
             Console.WriteLine("\n");
 
             var result2 = books.OfType<Book>().Take(2);
@@ -170,6 +166,7 @@ namespace LINQ
             {
                 Console.Write(v + "\t");
             }
+
             Console.WriteLine("\n");
 
             var result3 = books.Cast<Book>().Take(2);
@@ -177,6 +174,7 @@ namespace LINQ
             {
                 Console.Write(v + "\t");
             }
+
             Console.WriteLine("\n");
 
             var result4 = books.Take(2);
@@ -184,6 +182,7 @@ namespace LINQ
             {
                 Console.Write(v + "\t");
             }
+
             Console.WriteLine("\n");
         }
 
@@ -193,18 +192,20 @@ namespace LINQ
         /// </summary>
         private static void Example5()
         {
-            Person[] people = {
-                                 new Person("Tom", "Microsoft"),
-                                 new Person("Sam", "Google"),
-                                 new Person("Bob", "JetBrains"),
-                                 new Person("Mike", "Microsoft"),
-                                 new Person("Kate", "JetBrains"),
-                                 new Person("Alice", "Microsoft"),
-                              };
+            Person[] people =
+            [
+                new("Tom", "Microsoft"),
+                new("Sam", "Google"),
+                new("Bob", "JetBrains"),
+                new("Mike", "Microsoft"),
+                new("Kate", "JetBrains"),
+                new("Alice", "Microsoft"),
+            ];
 
             var companies = from person in people
-                            group person by person.Company into g
-                            select new { Name = g.Key, Count = g.Count() };
+                group person by person.Company
+                into g
+                select new { Name = g.Key, Count = g.Count() };
 
             foreach (var company in companies)
             {
@@ -213,25 +214,29 @@ namespace LINQ
         }
 
 
-        record class Person(string Name, string Company);
-        record class Company(string Title, string Language);
+        record Person(string Name, string Company);
+
+        record Company(string Title, string Language);
+
         /// <summary>
         /// Join subquery
         /// </summary>
         public static void Example6()
         {
-            Person[] people = {
-                                new Person("Bill", "Microsoft"), new Person("Alex", "Google"),
-                                new Person("Bob", "JetBrains"), new Person("Mike", "Microsoft"),
-                            };
-            Company[] companies = {
-                                new Company("Microsoft", "C#"),
-                                new Company("Google", "Go"),
-                                new Company("Oracle", "Java")
-                            };
+            Person[] people =
+            [
+                new("Bill", "Microsoft"), new("Alex", "Google"),
+                new("Bob", "JetBrains"), new("Mike", "Microsoft"),
+            ];
+            Company[] companies =
+            [
+                new("Microsoft", "C#"),
+                new("Google", "Go"),
+                new("Oracle", "Java")
+            ];
             var employees = from p in people
-                            join c in companies on p.Company equals c.Title
-                            select new { Name = p.Name, Company = c.Title, Language = c.Language };
+                join c in companies on p.Company equals c.Title
+                select new { Name = p.Name, Company = c.Title, Language = c.Language };
 
             foreach (var emp in employees)
                 Console.WriteLine($"{emp.Name} - {emp.Company} ({emp.Language})");
