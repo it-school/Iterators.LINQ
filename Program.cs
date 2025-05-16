@@ -4,7 +4,7 @@ namespace LINQ
 {
     internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Example1();
             Console.WriteLine("\n----------------------------------------------------------------\n");
@@ -24,14 +24,14 @@ namespace LINQ
 
         public class DaysOfTheWeek : IEnumerable
         {
-            private string[] days = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+            private readonly string[] _days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
             public IEnumerator GetEnumerator()
             {
-                for (int index = days.Length - 1; index >= 0; index--)
+                for (int index = _days.Length - 1; index >= 0; index--)
                 {
                     // Yield each day of the week
-                    yield return days[index];
+                    yield return _days[index];
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace LINQ
 
             // LINQ methods style
             var selectedNames2 = names.Where(name => name.Length == 5).OrderBy(name => name);
-            foreach (string name in selectedNames2)
+            foreach (var name in selectedNames2)
                 Console.WriteLine(name.ToUpper());
         }
 
@@ -114,8 +114,8 @@ namespace LINQ
             }
 
             Console.WriteLine("\n");
-            string[] boys = { "Alex", "Bob", "Charles", "Dan" };
-            string[] girls = { "Caroline", "Barbara", "Ann", "Adel" };
+            string[] boys = ["Alex", "Bob", "Charles", "Dan"];
+            string[] girls = ["Caroline", "Barbara", "Ann", "Adel"];
             var result = boys.GroupJoin(girls, x => x[0], y => y[0], (x, matches) => new { Boy = x, Girls = matches });
             foreach (var pair in result)
             {
@@ -203,9 +203,9 @@ namespace LINQ
             ];
 
             var companies = from person in people
-                group person by person.Company
+                            group person by person.Company
                 into g
-                select new { Name = g.Key, Count = g.Count() };
+                            select new { Name = g.Key, Count = g.Count() };
 
             foreach (var company in companies)
             {
@@ -235,8 +235,8 @@ namespace LINQ
                 new("Oracle", "Java")
             ];
             var employees = from p in people
-                join c in companies on p.Company equals c.Title
-                select new { Name = p.Name, Company = c.Title, Language = c.Language };
+                            join c in companies on p.Company equals c.Title
+                            select new { Name = p.Name, Company = c.Title, Language = c.Language };
 
             foreach (var emp in employees)
                 Console.WriteLine($"{emp.Name} - {emp.Company} ({emp.Language})");
